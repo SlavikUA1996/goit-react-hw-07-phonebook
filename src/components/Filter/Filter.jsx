@@ -5,17 +5,13 @@ import './Filter.module.css';
 export const Filter = () => {
 const dispatch = useDispatch();
   const filter = useSelector(getFilter);
-  console.log(filter)
 
-  const onChangeFilter = e => {
-    dispatch(setFilter(e.target.value));
-  };
 
   return (
     <div>
       <label>
         Find contacts by name
-        <input type="text" value={filter} onChange={onChangeFilter} />
+        <input type="text" value={filter} onChange={e => dispatch(setFilter(e.target.value))} />
       </label>
     </div>
   );

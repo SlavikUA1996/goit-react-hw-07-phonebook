@@ -2,7 +2,7 @@
 // import { getContacts, getFilter, deleteContact } from '../../redux/slice';
 import './ContactList.module.css';
 
-// export const ContactList = () => {
+export const ContactList = () => { }
 //   const dispatch = useDispatch();
 //   const contacts = useSelector(getContacts);
 //   const filter = useSelector(getFilter);

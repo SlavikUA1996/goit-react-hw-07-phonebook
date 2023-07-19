@@ -9,12 +9,22 @@ import { configureStore } from '@reduxjs/toolkit';
 //   REGISTER,
 // } from 'redux-persist';
 import { filterReduser } from './slice';
+import { contctsApi } from './contactSlice';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const store = configureStore({
   reducer: {
     filter: filterReduser,
-  }
+    [contctsApi.reducerPath]: contctsApi.reducer,
+  },
+   middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware(),
+    contctsApi.middleware,
+  ],
 });
+setupListeners(store.dispatch);
+
+
 //   middleware: getDefaultMiddleware =>
 //     getDefaultMiddleware({
 //       serializableCheck: {
