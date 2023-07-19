@@ -1,8 +1,40 @@
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getContacts, getFilter, deleteContact } from '../../redux/slice';
+import { useSelector } from 'react-redux';
+import { getFilter } from '../../redux/slice';
+import { useGetContactsQuery } from '../../redux/contactSlice';
+
 import './ContactList.module.css';
 
-export const ContactList = () => { }
+export const ContactList = () => { 
+ const filter = useSelector(getFilter);
+  console.log(filter);
+  const { data: contacts } = useGetContactsQuery();
+  console.log(contacts);
+
+
+
+  const findContacts = () => { 
+
+  }
+  const filteredContacts = findContacts();
+  return (
+    <ul>
+      {filteredContacts.map(({ id, name, number }) => {
+        return (
+          <li key={id}>
+            <p>
+              {name}: {number}
+            </p>
+            <button type="button">
+              Delete
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+
 //   const dispatch = useDispatch();
 //   const contacts = useSelector(getContacts);
 //   const filter = useSelector(getFilter);
