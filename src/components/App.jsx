@@ -1,12 +1,20 @@
-// import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { useDispatch } from 'react-redux';
 
+
+import { contactsApi } from 'redux/operations';
 
 export const App = () => {
+const dispatch = useDispatch();
+ 
 
+  useEffect(() => {
+    dispatch(contactsApi());
+  }, [dispatch]);
 
   return (
     <section>
@@ -14,6 +22,7 @@ export const App = () => {
       <ContactForm />
       <h2>Contacts</h2>
       <Filter />
+      
       <ContactList/>
     </section>
   );

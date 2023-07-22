@@ -1,9 +1,12 @@
-// import React, { Component } from 'react';
+import React from 'react';
 import { useState } from 'react';
-import {
-  useGetContactsQuery,
-  useAddContactMutation,
-} from '../../redux/contactSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { addContacts } from 'redux/operations';
+import { getContacts } from 'redux/selectors';
+// import {
+//   useGetContactsQuery,
+//   useAddContactMutation,
+// } from '../../redux/contactSlice'
 // import { nanoid } from 'nanoid';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { getContacts, addContact } from '../../redux/slice';
@@ -52,10 +55,12 @@ export const ContactForm = () => {
   //   setNumber('');
   // };
 const [name, setName] = useState('');
-  const [phone, setNumber] = useState('');
-
-  const { data: contacts } = useGetContactsQuery();
-  const [addContact] = useAddContactMutation();
+  const [number, setNumber] = useState('');
+const dispatch = useDispatch();
+  const items = useSelector(getContacts);
+  // const { data: contacts } = useGetContactsQuery();
+  // const [addContact] = useAddContactMutation();
+  
 
    const handleChange = event => {
     const { name, value } = event.target;
@@ -71,24 +76,16 @@ const [name, setName] = useState('');
     }
   };
    const handleSubmit = async event => {
-    event.preventDefault();
-    const contact = {
-      name,
-      phone,
-     };
-     
-       const enterContacts = contacts.some(
-      contact =>
-        (contact.name === name.toLowerCase() && contact.phone === phone) ||
-        contact.phone === phone
-     );
-     
-         enterContacts
-      ? alert(`${name} or ${phone} is already in contacts`)
-      : addContact(contact);
+     event.preventDefault();
+       const form = event.currentTarget;
+    const contact = [...items];
+  if (contact.findIndex(contact => name === contact.name) !== -1) {
+      alert(`${name} is already in contacts.`);
+    } else {
+      dispatch(addContacts({ name: name, phone: number }));
+    }
 
-    setName('');
-    setNumber('');
+    form.reset();
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -103,7 +100,7 @@ const [name, setName] = useState('');
       <input
         type="tel"
         name="number"
-       value={phone}
+       value={number}
         onChange={handleChange}
         placeholder="number"
         

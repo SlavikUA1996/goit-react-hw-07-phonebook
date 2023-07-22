@@ -9,20 +9,16 @@ import { configureStore } from '@reduxjs/toolkit';
 //   REGISTER,
 // } from 'redux-persist';
 import { filterReduser } from './slice';
-import { contactsApi } from './contactSlice';
-import { setupListeners } from '@reduxjs/toolkit/query';
+import { contactsReducer } from './contactSlice';
+
 
 export const store = configureStore({
   reducer: {
     filter: filterReduser,
-    [contactsApi.reducerPath]: contactsApi.reducer,
-  },
-   middleware: getDefaultMiddleware => [
-    ...getDefaultMiddleware(),
-    contactsApi.middleware,
-  ],
+    contacts: contactsReducer,
+  }
 });
-setupListeners(store.dispatch);
+
 
 
 //   middleware: getDefaultMiddleware =>
